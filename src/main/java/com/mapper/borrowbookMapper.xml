@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 命名空间，名字可以随意起，只要不冲突即可 -->
+<!-- 目的是为了区分映射文件中的方法 -->
+<mapper namespace="com/mapper/borrowbookMapper">
+    <!-- 对象映射，可以不写 -->
+    <!-- 查询功能，resultType 设置返回值类型  parameterType="com.model.books"-->
+    <select id="findAll" resultType="borrowbook">  <!-- 书写 SQL 语句 -->
+        SELECT * FROM library.borrowbook
+        <where>
+               <if test="email != null">
+                   email = #{email}
+               </if>
+               <!--<if test="author != null">
+                   AND author = #{author}
+               </if>-->
+        </where>
+    </select>
+
+    <!-- 新增功能，在SQL语句中有参数，并以实体来封装参数 -->
+    <insert id="insert" parameterType="borrowbook">
+        INSERT INTO borrowbook (id,email,bookID,returned) VALUES (#{id},#{email},#{bookID},#{returned})
+    </insert>
+
+    <!-- 修改功能 -->
+    <update id="update" parameterType="borrowbook">
+        UPDATE borrowbook set email=#{email},bookID=#{bookID},returned=#{returned}
+        WHERE id = #{id}
+    </update>
+
+    <!-- 得到单条记录 -->
+    <select id="getOne" resultType="borrowbook">
+        SELECT * FROM borrowbook
+        WHERE id = #{id}
+    </select>
+
+    <!-- 删除功能 -->
+    <delete id="deleteById" parameterType="integer">
+        DELETE FROM borrowbook
+        WHERE id = #{id}
+    </delete>
+</mapper>

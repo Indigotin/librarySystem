@@ -1,0 +1,22 @@
+/*#loginform input {
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    margin-bottom: 10px;
+    width: 100%;
+    box-sizing: border-box;
+    font-family: montserrat;
+    color: #2C3E50;
+    font-size: 13px;
+
+}*/
+/*input:focus {
+    outline: none !important;
+    border:1px solid red;
+    box-shadow: 0 0 10px #719ECE;
+}*/
+#logindiv{
+    display:block;
+    margin-left:auto;
+    margin-right:auto;
+}

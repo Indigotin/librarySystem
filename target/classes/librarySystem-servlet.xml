@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                        http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+                        http://www.springframework.org/schema/mvc
+                        http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
+                        http://www.springframework.org/schema/context
+                        http://www.springframework.org/schema/context/spring-context-3.2.xsd ">
+
+    <!--激活spring基于annotation的DI使用户可以再springMvc中使用spring的强大功能-->
+    <context:annotation-config/>
+
+    <!-- 静态资源的管理 css js imgs-->
+    <mvc:resources mapping="/resources/css/**" location="/resources/css/"/>
+    <mvc:resources mapping="/resources/js/**" location="/resources/js/"/>
+    <mvc:resources mapping="/resources/img/**" location="/resources/img/"/>
+
+    <!-- 包自动扫描 -->
+    <!--handlerMapping无需配置，springMVC可以默认启动
+    DefaultAnnotationHandlerMapping  annotation-driven HandlerMapping-->
+    <context:component-scan base-package="com.controller">
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+
+    <!-- 扩充了注解驱动，可以将请求参数绑定到控制器参数 声明注解开发方式-->
+    <mvc:annotation-driven/>
+
+    <!-- 内部资源视图解析器，前缀 + 逻辑名 + 后缀 ViewResolver-->
+    <bean id="internalResourceViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/views/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+
+    <!-- 200*1024*1024即200M resolveLazily属性启用是为了推迟文件解析，以便捕获文件大小异常-->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="maxInMemorySize" value="209715200"/>
+        <property name="defaultEncoding" value="UTF-8"/>
+        <property name="resolveLazily" value="true"/>
+    </bean>
+</beans>

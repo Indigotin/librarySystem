@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 命名空间，名字可以随意起，只要不冲突即可 -->
+<!-- 目的是为了区分映射文件中的方法 -->
+<mapper namespace="com/mapper/readerMapper">
+    <!-- 定义 Sql 标签 -->
+    <sql id="cols">
+        id,email,password,name,age,phone,photo,balance,borrowNum
+    </sql>
+    <!-- 对象映射，可以不写 -->
+    <!-- 查询功能，resultType 设置返回值类型 -->
+    <!--返回值 resultType 用于简单的类型,返回值 resultMap 用于复杂的类型-->
+    <select id="findAll" resultType="reader">  <!-- 书写 SQL 语句 此处必须用.-->
+        SELECT * FROM reader
+    </select>
+
+    <!-- 新增功能，在SQL语句中有参数，并以实体来封装参数 -->
+    <insert id="insert" parameterType="reader">
+        <!-- 使用 Sql 标签 记得加()-->
+        INSERT INTO reader (<include refid="cols"/>) VALUES (#{id},#{email},#{password},#{name},#{age},#{phone},#{photo},#{balance},#{borrowNum})
+    </insert>
+
+<!-- 修改功能 -->
+    <update id="update" parameterType="reader">
+        UPDATE reader set email=#{email},password=#{password},name=#{name},age=#{age},phone=#{phone},photo=#{photo},balance=#{balance},borrowNum=#{borrowNum}
+        WHERE id = #{id}
+    </update>
+
+    <!-- 得到单条记录 -->
+    <select id="get" resultType="reader">
+        SELECT * FROM reader
+        WHERE id = #{id}
+    </select>
+
+    <!-- 得到单条记录通过email -->
+    <select id="getByEmail" resultType="reader">
+        SELECT * FROM reader
+        WHERE email = #{email}
+    </select>
+
+    <!-- 删除功能 -->
+    <delete id="deleteById" parameterType="integer">
+        DELETE FROM reader
+        WHERE id = #{id}
+    </delete>
+
+</mapper>
